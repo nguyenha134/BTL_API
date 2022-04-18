@@ -1,0 +1,29 @@
+﻿
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetAllCustomers();
+    });
+    //Hàm lấy ra toàn bộ danh sách Khách Hàng. Dùng $.ajax() thực hiện method HTTP GET
+    function GetAllCustomers() {
+        $.ajax({
+            url: 'https://localhost:44381/api/Values/',
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function (response) {
+
+            },
+            success: function (reponse) {
+                const len = reponse.length;
+                console.log(reponse);
+                let table = '<li class="nav-item"> < span class="nav-click" > <i class="nav-arrow"></i> </span >';
+                for (var i = 0; i < len; ++i) {
+                    table = table + '<a>' + reponse[i].TenDanhMuc + '</a>';
+                }
+                table = table + '</li>';
+                document.getElementById('DanhMuc').innerHTML = table;
+            },
+            fail: function (response) { }
+        });
+    }
+</script>

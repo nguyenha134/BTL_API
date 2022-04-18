@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DataBaseYTe">
+  <DataContextMoniker Name="/DataBaseYTeDataContext" />
+  <nestedChildShapes>
+    <classShape Id="2510dce1-280e-49d5-b570-af5c96c8f400" absoluteBounds="0.625, 1, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DataBaseYTeDataContext/DanhMuc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c1f264e8-57ed-4d74-b399-78d4781ff431" absoluteBounds="0.64000000000000012, 1.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3c8fe799-ef5a-4775-8212-f0f773309d28" absoluteBounds="3.125, 2.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/DataBaseYTeDataContext/LoaiThietBi" />
+      <nestedChildShapes>
+        <elementListCompartment Id="352ef754-703f-4e39-b5d8-a9a7a4d68593" absoluteBounds="3.14, 3.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b6d8a67e-b3a1-4099-a4b4-6c84dedf74ea" absoluteBounds="0.5, 2.5, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DataBaseYTeDataContext/ThietBiYTe" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ea9d24dd-2550-4b71-82f1-313a7cc60c42" absoluteBounds="0.51499999999999968, 2.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
