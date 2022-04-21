@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            LayLoai();
+            GetAllSP();
+        });
+        function LayLoai() {
+            $.ajax({
+                url: 'https://localhost:44381/Loai',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table = table + '<hr>'
+                        table = table + '<option value="' + reponse[i].MaLoai+'">'  + reponse[i].TenLoai +'</option>'
+                    }
+                    document.getElementById('value').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function GetAllSP() {
+            $.ajax({
+                url: 'https://localhost:44381/SP',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        if (reponse[i].GiaBan == -1) {
+                            reponse[i].GiaBan="Hết hàng"
+                        }
+                        let STT = i + 1;
+                        table = table + '<tr>'
+                        table = table + '<td>' + STT + '</td>';
+                        table = table + '<td>' + reponse[i].MaThietBi + '</td>';
+                        table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
+                        table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
+                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
+                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Delete</button>  <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
+                        table = table + '<tr>'
+                    }
+                    document.getElementById('data').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function GetSP(ma) {
+            $.ajax({
+                url: 'https://localhost:44381/SP/'+ma,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        if (reponse[i].GiaBan == -1) {
+                            reponse[i].GiaBan = "Hết hàng"
+                        }
+                        let STT = i + 1;
+                        table = table + '<tr>'
+                        table = table + '<td>' + STT + '</td>';
+                        table = table + '<td>' + reponse[i].MaThietBi + '</td>';
+                        table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
+                        table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
+                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
+                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Delete</button>  <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
+                        table = table + '<tr>'
+                    }
+                    document.getElementById('data').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function deleteSP(id) {
+            var url = 'https://localhost:44381/Delete/' + id
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Xóa không thành công");
+                },
+                success: function (reponse) {
+                    alert("Xóa thành công");
+                    window.location.href = '@Url.Action("DanhSach", "Admin")';
+                }
+            });
+        }
+    </script>
+}
+<div id="content" class="">
+    <div class="container" style="width:100%;">
+
+        @*<button type="submit" class="btn btn-info">>Chọn</button>*@
+        <hr style="height: 0;" />
+        <div style="display:inline">
+            <p> Chọn loại sản phẩm: </p>
+            <select style="width:40%;height:40px" id="value" onchange="GetSP(value);">
+            </select>
+        </div>
+        
+        <hr style="height: 0;" />
+        <a href="@Url.Action("Them","Admin")" style="float: left;"><button class="btn btn-info">Thêm sản phẩm</button></a>
+
+        <br>
+        <table class="table table-bordered" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Ảnh</th>
+                    <th>Tùy chọn</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+            </tbody>
+        </table>
+    </div>
+</div>
+
