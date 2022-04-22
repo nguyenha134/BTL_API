@@ -62,4 +62,24 @@
       <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Demo" Member="Demos">
+    <Type Name="Demo">
+      <Column Name="MaThietBi" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="MaLoai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="MaHang" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TenThietBi" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="GioiThieu" Type="System.String" DbType="NVarChar(280)" CanBeNull="true" />
+      <Column Name="GiaBan" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Anh" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="An" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="GiamGia" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongSoSao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongSoDanhGia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="MaDanhMuc" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TenLoai" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

@@ -18,7 +18,7 @@
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                    alert("Không");
+                   
                 },
                 success: function (reponse) {
                     const len = reponse.length;
@@ -39,7 +39,7 @@
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                    alert("Không");
+                   
                 },
                 success: function (reponse) {
                     const len = reponse.length;
@@ -71,67 +71,65 @@
                 }
             });
         }
-
-
     </script>
 }
 
 <div class="container">
     <table style="border:none">
-        <tbody>
+        <tbody">
             <tr>
-                <td style="width:150px">Mã thiết bị: </td>
+                <td>Mã thiết bị: </td>
                 <td>
-                    <input id="txtThietBi" type="text" name="MaThietBi" />
+                    <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 5px; width: 200px" />
                 </td>
             </tr>
             <tr>
-                <td style="width:30px">Mã loại: </td>
+                <td>Mã loại: </td>
                 <td>
-                    <select style="width:25%;height:40px" id="value" name="MaLoai" onchange="GetSP(value);">
+                    <select style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="value" name="MaLoai" onchange="GetSP(value);">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>Mã hàng: </td>
                 <td>
-                    <select style="width:25%;height:40px" id="value1" name="MaHang" onchange="GetSP(value);">
+                    <select style="margin-bottom: 10px; border-radius: 5px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>Tên thiết bị: </td>
                 <td>
-                    <input id="txtTTB" type="text" name="TenThietBi" />
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtTTB" type="text" name="TenThietBi" />
                 </td>
             </tr>
             <tr>
                 <td>Giá bán: </td>
                 <td>
-                    <input id="txtGiaBan" type="text" name="GiaBan" />
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtGiaBan" type="text" name="GiaBan" />
                 </td>
             </tr>
             <tr>
                 <td>Url ảnh: </td>
                 <td>
-                    <input id="txtAnh" type="text" name="Anh" />
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtAnh" type="text" name="Anh" />
                 </td>
             </tr>
             <tr>
                 <td>Chi tiết: </td>
                 <td>
-                    <input id="txtChiTiet" type="text" name="ChiTiet" />
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtChiTiet" type="text" name="ChiTiet" />
                 </td>
             </tr>
             <tr>
                 <td>Số lượng: </td>
                 <td>
-                    <input id="txtSoLuong" type="text" name="SoLuong" />
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtSoLuong" type="text" name="SoLuong" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button class="btn-primary update-button"
+                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
                             onclick="ThemSP();">
                         Thêm mới
                     </button>

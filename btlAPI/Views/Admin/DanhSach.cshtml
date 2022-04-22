@@ -10,7 +10,31 @@
         $(document).ready(function () {
             LayLoai();
             GetAllSP();
+            LayLoai1();
+            LayHang();
         });
+        function LaytheomaTB(maTB) {
+            $.ajax({
+                url: ' https://localhost:44381/SPTheoMa/' + maTB,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (res) {
+                    alert("Lỗi mã");
+                },
+                success: function (res) {
+                    $("#txtThietBi").val(res.MaThietBi),
+                        $("#txtTTB").val(res.TenThietBi),
+                        $("#value2").val(res.MaLoai),
+                        $("#value1").val(res.MaHang),
+                        $("#txtGiaBan").val(res.GiaBan),
+                        $("#txtAnh").val(res.Anh),
+                        $("#txtChiTiet").val(res.ChiTiet),
+                        $("#txtSoLuong").val(res.SoLuong)
+                },
+                fail: function (response) { }
+            })
+        }
         function LayLoai() {
             $.ajax({
                 url: 'https://localhost:44381/Loai',
@@ -25,16 +49,16 @@
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table = table + '<hr>'
-                        table = table + '<option value="' + reponse[i].MaLoai+'">'  + reponse[i].TenLoai +'</option>'
+                        table = table + '<option value="' + reponse[i].MaLoai + '">' + reponse[i].TenLoai + '</option>'
                     }
                     document.getElementById('value').innerHTML = table;
                 },
                 fail: function (response) { }
             });
         }
-        function GetAllSP() {
+        function LayLoai1() {
             $.ajax({
-                url: 'https://localhost:44381/SP',
+                url: 'https://localhost:44381/Loai',
                 method: 'GET',
                 contentType: 'json',
                 dataType: 'json',
@@ -45,27 +69,17 @@
                     const len = reponse.length;
                     let table = '';
                     for (var i = 0; i < len; ++i) {
-                        if (reponse[i].GiaBan == -1) {
-                            reponse[i].GiaBan="Hết hàng"
-                        }
-                        let STT = i + 1;
-                        table = table + '<tr>'
-                        table = table + '<td>' + STT + '</td>';
-                        table = table + '<td>' + reponse[i].MaThietBi + '</td>';
-                        table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
-                        table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
-                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
-                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Delete</button>  <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
-                        table = table + '<tr>'
+                        table = table + '<hr>'
+                        table = table + '<option value="' + reponse[i].MaLoai + '">' + reponse[i].TenLoai + '</option>'
                     }
-                    document.getElementById('data').innerHTML = table;
+                    document.getElementById('value2').innerHTML = table;
                 },
                 fail: function (response) { }
             });
         }
-        function GetSP(ma) {
+        function GetAllSP() {
             $.ajax({
-                url: 'https://localhost:44381/SP/'+ma,
+                url: 'https://localhost:44381/SP',
                 method: 'GET',
                 contentType: 'json',
                 dataType: 'json',
@@ -86,13 +100,93 @@
                         table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
                         table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
                         table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
-                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Delete</button>  <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
+                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Xóa</button>  <button type="button" class="btn btn-danger" onclick="LaytheomaTB(\'' + reponse[i].MaThietBi + '\'),HienThiSua()">Sửa</button> </td>';
                         table = table + '<tr>'
                     }
                     document.getElementById('data').innerHTML = table;
                 },
                 fail: function (response) { }
             });
+        }
+        function GetSP(ma) {
+            $.ajax({
+                url: 'https://localhost:44381/SP/' + ma,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        if (reponse[i].GiaBan == -1) {
+                            reponse[i].GiaBan = "Hết hàng"
+                        }
+                        let STT = i + 1;
+                        table = table + '<tr>'
+                        table = table + '<td>' + STT + '</td>';
+                        table = table + '<td>' + reponse[i].MaThietBi + '</td>';
+                        table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
+                        table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
+                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
+                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Xóa</button>  <button type="button" class="btn btn-danger" onclick="HienThiSua(),LaytheomaTB(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
+                        table = table + '<tr>'
+                    }
+                    document.getElementById('data').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function LayHang() {
+            $.ajax({
+                url: 'https://localhost:44381/Lay',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table = table + '<hr>'
+                        table = table + '<option value="' + reponse[i].MaHang + '">' + reponse[i].Ten + '</option>'
+                    }
+                    document.getElementById('value1').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function SuaSP() {
+            var url = 'https://localhost:44381/api/danhSach/?maThietBi=' +
+                $("input[name='MaThietBi']").val() + '&maLoai=' + $("select[name='MaLoai']").val() +
+                '&maHang=' + $("select[name='MaHang']").val() + '&tenThietBi=' + $("input[name='TenThietBi']").val() + '&giaBan=' + $("input[name='GiaBan']").val()
+                + '&anh=' + $("input[name='Anh']").val() + '&chiTiet=' + $("input[name='ChiTiet']").val() + '&soLuong=' + $("input[name='SoLuong']").val();
+            $.ajax({
+                url: url,
+                method: 'PUT',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Sửa không thành công");
+                },
+                success: function (reponse) {
+                    alert("Sửa thành công");
+                    HienThiTim();
+                    GetAllSP();
+                }
+            });
+        }
+        function HienThiSua() {
+            document.getElementById("Sua").style.display = 'inline';
+            document.getElementById("Tim").style.display = 'none';
+        }
+        function HienThiTim() {
+            document.getElementById("Sua").style.display = 'none';
+            document.getElementById("Tim").style.display = 'inline';
         }
         function deleteSP(id) {
             var url = 'https://localhost:44381/Delete/' + id
@@ -112,7 +206,7 @@
         }
     </script>
 }
-<div id="content" class="">
+<div id="Tim" class="container">
     <div class="container" style="width:100%;">
 
         @*<button type="submit" class="btn btn-info">>Chọn</button>*@
@@ -122,10 +216,10 @@
             <select style="width:25%;height:40px" id="value" onchange="GetSP(value);">
             </select>
         </div>
-        
+
         <hr style="height: 0;" />
         <a href="@Url.Action("Them","Admin")" style="float: left; margin-bottom: 20px;"><button class="btn btn-info">Thêm sản phẩm</button></a>
-
+        
         <br>
         <table class="table table-bordered" style="width:100%;">
             <thead>
@@ -143,4 +237,71 @@
         </table>
     </div>
 </div>
+<div class="container" id="Sua" style="display:none">
+    <table style="border:none">
+        <tbody">
+            <tr>
+                <td>Mã thiết bị: </td>
+                <td>
+                    <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 5px; width: 200px" />
+                </td>
+            </tr>
+            <tr>
+                <td>Mã loại: </td>
+                <td>
+                    <select style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="value2" name="MaLoai" onchange="GetSP(value);">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Mã hàng: </td>
+                <td>
+                    <select style="margin-bottom: 10px; border-radius: 5px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Tên thiết bị: </td>
+                <td>
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtTTB" type="text" name="TenThietBi" />
+                </td>
+            </tr>
+            <tr>
+                <td>Giá bán: </td>
+                <td>
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtGiaBan" type="text" name="GiaBan" />
+                </td>
+            </tr>
+            <tr>
+                <td>Url ảnh: </td>
+                <td>
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtAnh" type="text" name="Anh" />
+                </td>
+            </tr>
+            <tr>
+                <td>Chi tiết: </td>
+                <td>
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtChiTiet" type="text" name="ChiTiet" />
+                </td>
+            </tr>
+            <tr>
+                <td>Số lượng: </td>
+                <td>
+                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtSoLuong" type="text" name="SoLuong" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;" onclick="HienThiTim()">Quay lại</button>
+                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
+                            onclick="SuaSP();">
+                        Cập nhật
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+    </table>
+</div>
+
+
 

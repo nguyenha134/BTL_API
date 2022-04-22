@@ -28,6 +28,38 @@ namespace btlAPI.Areas.Admin.Controllers
         {
             return db.ThietBiYTes.Where(x => x.MaLoai == ma).ToList();
         }
+        [Route("SPTheoMa/{maTB}")]
+        [HttpGet]
+        public Demo LaySPTheoMaTB(string maTB)
+        {
+            return db.Demos.FirstOrDefault(x => x.MaThietBi == maTB);
+        }
+        [HttpPut]
+        public bool UpdateSanPham(string maThietBi, string maLoai, string maHang, string tenThietBi, int giaBan, string anh, string chiTiet, int soLuong)
+        {
+            try
+            {
+                ThietBiYTe thietBiYTe = db.ThietBiYTes.FirstOrDefault(x => x.MaThietBi == maThietBi);
+                if (thietBiYTe == null)
+                {
+                    return false;
+                }
+                thietBiYTe.MaThietBi = maThietBi;
+                thietBiYTe.MaLoai = maLoai;
+                thietBiYTe.MaHang = maHang;
+                thietBiYTe.TenThietBi = tenThietBi;
+                thietBiYTe.GiaBan = giaBan;
+                thietBiYTe.Anh = anh;
+                thietBiYTe.ChiTiet = chiTiet;
+                thietBiYTe.SoLuong = soLuong;
+                db.SubmitChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         [Route("Delete/{id}")]
         [HttpDelete]
         public bool DeleteSP(string id)

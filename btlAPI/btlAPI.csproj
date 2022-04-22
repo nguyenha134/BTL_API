@@ -137,7 +137,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhSachController.cs" />
     <Compile Include="Areas\Admin\Controllers\HoaDonController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SuaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThemController.cs" />
     <Compile Include="Areas\Client\TB_YTEController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -378,7 +377,6 @@
     <Content Include="Views\Admin\DanhSach.cshtml" />
     <Content Include="Views\Admin\HoaDon.cshtml" />
     <Content Include="Views\Admin\Them.cshtml" />
-    <Content Include="Views\Admin\Sua.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
