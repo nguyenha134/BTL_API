@@ -105,7 +105,7 @@
                     alert("Xóa không thành công");
                 },
                 success: function (reponse) {
-                    alert("Xóa thành công");
+                    alert("Bạn có muốn xóa không?");
                     window.location.href = '@Url.Action("DanhSach", "Admin")';
                 }
             });
@@ -117,14 +117,14 @@
 
         @*<button type="submit" class="btn btn-info">>Chọn</button>*@
         <hr style="height: 0;" />
-        <div style="display:inline">
+        <div style="display: inline;">
             <p> Chọn loại sản phẩm: </p>
-            <select style="width:40%;height:40px" id="value" onchange="GetSP(value);">
+            <select style="width:25%;height:40px" id="value" onchange="GetSP(value);">
             </select>
         </div>
         
         <hr style="height: 0;" />
-        <a href="@Url.Action("Them","Admin")" style="float: left;"><button class="btn btn-info">Thêm sản phẩm</button></a>
+        <a href="@Url.Action("Them","Admin")" style="float: left; margin-bottom: 20px;"><button class="btn btn-info">Thêm sản phẩm</button></a>
 
         <br>
         <table class="table table-bordered" style="width:100%;">

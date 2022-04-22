@@ -41,22 +41,22 @@
                     <a href="@Url.Action("TrangChuAdmin","Admin")"><span class="fa fa-home mr-3"></span> Trang chủ </a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Danhsach","Admin")"><i class="fa-solid fa-list"></i> Danh sách</a>
+                    <a href="@Url.Action("Danhsach","Admin")"><span class="fa fa-list" aria-hidden="true"></span> Danh sách</a>
 
                 </li>
                 <li>
-                    <a href="@Url.Action("HoaDon","Admin")"><i class="fa-solid fa-ballot"></i> Hóa đơn</a>
+                    <a href="@Url.Action("HoaDon","Admin")"><span class="fa fa-file-text-o" aria-hidden="true"></span> Hóa đơn</a>
 
                 </li>
                 <li>
-                    <a href="@Url.Action("Dangnhap","Admin")"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</a>
+                    <a href="@Url.Action("Dangnhap","Admin")"><span class="fa fa-sign-out" aria-hidden="true"></span></i> Đăng xuất</a>
                 </li>
             </ul>
 
         </nav>
         <!-- Page Content  -->
         <div id="content">
-            <div style="background-color: black;height: 100px; margin-bottom: 20px;"></div>
+            <div style="background-color: cornflowerblue; height: 100px; margin-bottom: 20px; padding: 35px 30px; text-align: center; color: #fff; font-size: 25px; font-family: Tahoma">QUẢN LÝ VẬT TƯ THIẾT BỊ Y TẾ</div>
             <div class="container">
                 @RenderBody()
             </div>

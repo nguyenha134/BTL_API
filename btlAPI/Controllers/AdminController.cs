@@ -21,6 +21,10 @@ namespace btlAPI.Controllers
         {
             return View();
         }
+        public ActionResult Sua()
+        {
+            return View();
+        }
         public ActionResult HoaDon()
         {
             return View();

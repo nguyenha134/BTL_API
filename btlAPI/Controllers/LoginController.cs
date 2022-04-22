@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using btlAPI.Models;
@@ -10,41 +12,43 @@ namespace btlAPI.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        BTL_WebEntities1 db = new BTL_WebEntities1();
+        DataBaseYTeDataContext db = new DataBaseYTeDataContext();
+        static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
+        }
         public ActionResult Index()
         {
             return View();
         }
-        
         [HttpPost]
-        public ActionResult Login(string TenDangNhap, string MatKhau)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(FormCollection f)
         {
-            TaiKhoan tk = db.TaiKhoans.Where(s => s.UserName == TenDangNhap).SingleOrDefault<TaiKhoan>();
-            if (tk == null)
+            using (MD5 md5Hash = MD5.Create())
             {
-                TempData["Err"] = "Tài khoản không hợp lệ!";
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                if (tk.Password == MatKhau)
+                String sTaiKhoan = f["name"].ToString();
+                String sMatKhau = GetMd5Hash(md5Hash, f["pass"].ToString());
+                var NguoiDung = from p in db.TaiKhoans
+                                where p.UserName == sTaiKhoan && p.Password == sMatKhau
+                                select p;
+                if (NguoiDung.Count() == 0)
                 {
-
-                    ChuQuanLy user = db.ChuQuanLies.Where(s => s.ID == tk.ID).SingleOrDefault<ChuQuanLy>();
-                    Session["User"] = user.Ten;
-                    Session["TK"] = tk.Password;
-                    if (Session["Type"].ToString().ToUpper().Equals("Admin".ToUpper()))
-                    {
-                        return RedirectToAction("Index", "Admin/NhanVien");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Client/TB_YTE");
-                    }
+                    ViewBag.Thongbao = "Tài khoản hoặc mật khẩu sai";
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("TrangChuAdmin", "Admin");
                 }
             }
-            TempData["Err"] = "Sai mật khẩu!";
-            return RedirectToAction("Index");
 
         }
         public ActionResult Logout()

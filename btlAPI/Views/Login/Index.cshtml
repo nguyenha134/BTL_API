@@ -24,9 +24,18 @@
     @Styles.Render("~/Content/Data/admin.css")
     @Styles.Render("~/Content/Data/style.css")
 
-
+    <script type="text/javascript">function valid() {
+if (document.getElementById("ID").value == "") {
+alert("Vui lòng nhập User!");
+return false;
+}
+if (document.getElementById("Pass").value == "") {
+alert("Vui lòng nhập Pass!");
+return false;
+}
+return true;
+}</script>
     <!-- Favicons -->
-    @*<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">*@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="Dmitry Volkov">
@@ -34,12 +43,11 @@
 
 </head>
 <body>
-    <!-- sign in -->
     <div class="sign section--bg" style=" background: url(@Url.Content("~/Ảnh/banner.jpg")) center center / cover no-repeat">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="sign__content">
+                    <div class="sign__content" id="login" onsubmit="return valid()">
                         <!-- authorization form -->
                         @using (Html.BeginForm("Login", "Login"))
                         {
@@ -48,34 +56,30 @@
                                 <p class="sign__logo" id="Title_Form">
                                     THIẾT BỊ Y TẾ
                                 </p>
+                                <p>@ViewBag.Thongbao</p>
 
                                 <div class="sign__group">
-                                    <input type="text" class="sign__input" placeholder="Tên đăng nhập" required name="TenDangNhap">
-                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    <input id="ID" type="text" name="name" class="sign__input" placeholder="Tên đăng nhập" required name="TenDangNhap">
                                 </div>
 
                                 <div class="sign__group">
-                                    <input type="password" class="sign__input" placeholder="Mật khẩu" required name="MatKhau">
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    <input id="Pass" type="password" name="pass" class="sign__input" placeholder="Mật khẩu" required name="MatKhau">
                                 </div>
 
-                                <div class="text-left text-danger w-100 p-2" style="min-height:40px">@TempData["Err"]</div>
+                                @*<div class="text-left text-danger w-100 p-2" style="min-height:40px">@TempData["Err"]</div>*@
 
                                 <div class="sign__group sign__group--checkbox">
                                     <input id="Remeber" name="remember" type="checkbox">
                                     <label for="Remeber">Remember me</label>
                                 </div>
-                                <input type="submit" value="Login" class="sign__btn" />
+                                <input name="login " type="submit" value="Login" class="sign__btn" />
                                 <span class="sign__text">Forgot password?</span>
                             </div>
                         }
-                        <!-- end authorization form -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end sign in -->
-    <!-- JS -->
 </body>
 </html>
