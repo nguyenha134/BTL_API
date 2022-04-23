@@ -80,51 +80,59 @@
             <tr>
                 <td>Mã thiết bị: </td>
                 <td>
-                    <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 5px; width: 200px" />
+                    <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 2px; width: 280px" />
                 </td>
             </tr>
             <tr>
                 <td>Mã loại: </td>
                 <td>
-                    <select style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="value" name="MaLoai" onchange="GetSP(value);">
+                    <select style="margin-bottom: 10px; border-radius: 2px; width: 280px" id="value" name="MaLoai" onchange="GetSP(value);">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>Mã hàng: </td>
                 <td>
-                    <select style="margin-bottom: 10px; border-radius: 5px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
+                    <select style="margin-bottom: 10px; border-radius:2px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>Tên thiết bị: </td>
                 <td>
-                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtTTB" type="text" name="TenThietBi" />
+                    <input id="txtTTB" type="text" name="TenThietBi" class="form-control" style="margin-bottom: 10px;">
                 </td>
             </tr>
             <tr>
                 <td>Giá bán: </td>
                 <td>
-                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtGiaBan" type="text" name="GiaBan" />
+        <div class="input-group">
+                <input class="form-control" id="txtGiaBan" type="text" name="GiaBan" required  style="margin-bottom: 10px;">
+                <span class="input-group-text"  style="margin-bottom: 10px;">VNĐ</span>
+            </div>
                 </td>
             </tr>
             <tr>
                 <td>Url ảnh: </td>
                 <td>
-                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtAnh" type="text" name="Anh" />
+         <div class="input-group">
+                <span class="input-group-text"  style="margin-bottom: 10px;">http://</span>
+                <input id="txtAnh" type="text" name="Anh"  class="form-control" required  style="margin-bottom: 10px;">
+            </div>
                 </td>
             </tr>
             <tr>
                 <td>Chi tiết: </td>
                 <td>
-                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtChiTiet" type="text" name="ChiTiet" />
+                    <textarea id="txtChiTiet" name="ChiTiet" style="margin-bottom: 10px;"></textarea>
+                    <script>CKEDITOR.replace('ChiTiet');</script>
+
                 </td>
             </tr>
             <tr>
                 <td>Số lượng: </td>
                 <td>
-                    <input style="margin-bottom: 10px; border-radius: 5px; width: 200px" id="txtSoLuong" type="text" name="SoLuong" />
+                    <input id="txtSoLuong" type="number" name="SoLuong" min="0" value="0" class="form-control" style="margin-top: 10px;">
                 </td>
             </tr>
             <tr>
@@ -137,4 +145,5 @@
             </tr>
         </tbody>
         </table>
-    </div>
+   
+</div>
