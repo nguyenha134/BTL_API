@@ -1,9 +1,12 @@
 ﻿
+
 @{
     ViewBag.Title = "DanhSach";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
 
+<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @section scripts{
     <script type="text/javascript">
@@ -78,6 +81,10 @@
             });
         }
         function GetAllSP() {
+            var pageNum = 0;
+
+            $('.pagination').html('');
+
             $.ajax({
                 url: 'https://localhost:44381/SP',
                 method: 'GET',
@@ -87,29 +94,39 @@
                     alert("Không");
                 },
                 success: function (reponse) {
+
                     const len = reponse.length;
-                    let table = '';
-                    for (var i = 0; i < len; ++i) {
-                        if (reponse[i].GiaBan == -1) {
-                            reponse[i].GiaBan = "Hết hàng"
-                        }
-                        let STT = i + 1;
-                        table = table + '<tr>'
-                        table = table + '<td>' + STT + '</td>';
-                        table = table + '<td>' + reponse[i].MaThietBi + '</td>';
-                        table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
-                        table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
-                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
-                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Xóa</button>  <button type="button" class="btn btn-danger" onclick="HienThiSua(),LaytheomaTB(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
-                        table = table + '<tr>'
-                    }
-                    document.getElementById('data').innerHTML = table;
+
+
+                    end = pageNum * 5 + 5
+                    for (var j = 0; j < len / 5;)
+                        $('.pagination').append('<li class="page-item" data-page="' + j + '">\<a class="page-link" >' + j++ + '<span class="sr-only">(current)</span></a>\</li>').show();
+
+                    $('.pagination li:first-child').addClass('active')
+                    $('.pagination li').on('click', function () {
+                        pageNum = $(this).attr('data-page')
+                        if (pageNum == parseInt(len / 5))
+                            end = len;
+                        else
+                            end = pageNum * 5 + 5
+
+                        $('.pagination li').removeClass('active')
+                        $(this).addClass('active')
+                        Show(pageNum, end, reponse);
+                    })
+
+                    Show(pageNum, end, reponse);
+
                 },
                 fail: function (response) { }
             });
         }
         
         function GetSP(ma) {
+            var pageNum = 0;
+
+            $('.pagination').html('');
+
             $.ajax({
                 url: 'https://localhost:44381/SP/' + ma,
                 method: 'GET',
@@ -119,12 +136,42 @@
                     alert("Không");
                 },
                 success: function (reponse) {
+
                     const len = reponse.length;
-                    let table = '';
-                    for (var i = 0; i < len; ++i) {
-                        if (reponse[i].GiaBan == -1) {
-                            reponse[i].GiaBan = "Hết hàng"
-                        }
+
+
+                    end = pageNum * 5 + 5
+                    for (var j = 0; j < len / 5;)
+                        $('.pagination').append('<li class="page-item" data-page="' + j + '">\<a class="page-link" >' + j++ + '<span class="sr-only">(current)</span></a>\</li>').show();
+
+                    $('.pagination li:first-child').addClass('active')
+                    $('.pagination li').on('click', function () {
+                        pageNum = $(this).attr('data-page')
+                        if (pageNum == parseInt(len / 5))
+                            end = len;
+                        else
+                           end= pageNum * 5 + 5
+
+                        $('.pagination li').removeClass('active')
+                        $(this).addClass('active')
+                        Show(pageNum, end, reponse);
+                    })
+
+                    Show(pageNum, end, reponse);
+
+                },
+                fail: function (response) { }
+            });
+        }
+            function Show(pageNumX, endY, reponse) {
+
+            let table = '';
+                for (var i = pageNumX * 5; i < endY; i++) {
+
+                    if (reponse[i].GiaBan == -1) {
+                        reponse[i].GiaBan = "Hết hàng"
+                    }
+                    if (reponse[i].An == false) {
                         let STT = i + 1;
                         table = table + '<tr>'
                         table = table + '<td>' + STT + '</td>';
@@ -132,13 +179,14 @@
                         table = table + '<td style="max-width : 200px">' + reponse[i].TenThietBi + '</td>';
                         table = table + '<td style="max-width : 150px">' + reponse[i].GiaBan + '</td>';
                         table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 150px; height : 120px " /></div> </td>';
-                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="deleteSP(\'' + reponse[i].MaThietBi + '\')">Xóa</button>  <button type="button" class="btn btn-danger" onclick="HienThiSua(),LaytheomaTB(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
+                        table = table + '<td style="max-width : 150px" > <button type="button" class="btn btn-danger" onclick="Xoa(\'' + reponse[i].MaThietBi + '\')">Xóa</button>  <button type="button" class="btn btn-danger" onclick="HienThiSua(),LaytheomaTB(\'' + reponse[i].MaThietBi + '\')">Sửa</button> </td>';
                         table = table + '<tr>'
                     }
+                    else {
+
+                    }
                     document.getElementById('data').innerHTML = table;
-                },
-                fail: function (response) { }
-            });
+                }
         }
         function LayHang() {
             $.ajax({
@@ -181,6 +229,51 @@
                 }
             });
         }
+          function Xoa(id){
+            $.ajax({
+                url: 'https://localhost:44381/CTHD',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Xóa không thành công");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    let choice = confirm("Bạn có muốn xóa không");
+                    if (choice == true) {
+                        for (var i = 0; i < len; ++i) {
+                            if (reponse[i].MaThietBi == id && reponse[i].SoHDB == null) {
+                                AnTT(id);
+                            }
+                            else {
+                                deleteSP(id);
+                            }
+                            window.location.href = '@Url.Action("DanhSach", "Admin")';
+                        }
+                    }
+                    else {
+
+                    }
+                },
+                fail: function (response) { }
+            });
+        }
+        function AnTT(id) {
+            $.ajax({
+                url: 'https://localhost:44381/SuaTT/'+id,
+                method: 'PUT',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                },
+                fail: function (response) { }
+            });
+        }
         function HienThiSua() {
             document.getElementById("Sua").style.display = 'inline';
             document.getElementById("Tim").style.display = 'none';
@@ -197,21 +290,16 @@
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                    alert("Xóa không thành công");
+                    alert("Không");
                 },
                 success: function (reponse) {
-                    let choice = confirm("Bạn có muốn xóa không");
-                    if (choice == true) {
-                        window.location.href = '@Url.Action("DanhSach", "Admin")';
-                    }
-                    else {
 
-                    }
                 }
             });
         }
     </script>
 }
+
 <div id="Tim" class="container">
     <div class="container" style="width:100%;">
 
@@ -225,9 +313,11 @@
 
         <hr style="height: 0;" />
         <a href="@Url.Action("Them","Admin")" style="float: left; margin-bottom: 20px;"><button class="btn btn-info">Thêm sản phẩm</button></a>
-        
+
         <br>
-        <table class="table table-bordered" style="width:100%;">
+
+
+        <table class="table table-fluid" style="width:100%;">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -241,79 +331,85 @@
             <tbody id="data">
             </tbody>
         </table>
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination"></ul>
+            </nav>
+        </div>
     </div>
 </div>
-<div class="container"  id="Sua" style="display:none">
-    <table style="border:none">
-        <tbody">
-            <tr>
-                <td>Mã thiết bị: </td>
-                <td>
-                    <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 2px; width: 280px" />
-                </td>
-            </tr>
-            <tr>
-                <td>Mã loại: </td>
-                <td>
-                    <select style="margin-bottom: 10px; border-radius: 2px; width: 280px" id="value2" name="MaLoai" onchange="GetSP(value);">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Mã hàng: </td>
-                <td>
-                    <select style="margin-bottom: 10px; border-radius:2px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Tên thiết bị: </td>
-                <td>
-                    <input id="txtTTB" type="text" name="TenThietBi" class="form-control" style="margin-bottom: 10px;">
-                </td>
-            </tr>
-            <tr>
-                <td>Giá bán: </td>
-                <td>
-                    <div class="input-group">
-                        <input class="form-control" id="txtGiaBan" type="text" name="GiaBan" required style="margin-bottom: 10px;">
-                        <span class="input-group-text" style="margin-bottom: 10px;">VNĐ</span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Url ảnh: </td>
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-text" style="margin-bottom: 10px;">http://</span>
-                        <input id="txtAnh" type="text" name="Anh" class="form-control" required style="margin-bottom: 10px;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Chi tiết: </td>
-                <td>
-                    <textarea id="txtChiTiet" name="ChiTiet" style="margin-bottom: 10px;"></textarea>
-                    <script>CKEDITOR.replace('ChiTiet');</script>
-
-                </td>
-            </tr>
-            <tr>
-                <td>Số lượng: </td>
-                <td>
-                    <input id="txtSoLuong" type="number" name="SoLuong" min="0" value="0" class="form-control" style="margin-top: 10px;">
-                </td>
-            </tr>
-            <tr>
-                <td style="display: inline-flex">
-                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px; margin-right: 10px" onclick="HienThiTim()">Quay lại</button>
-                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
-                            onclick="SuaSP();">
-                        Cập nhật
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-    </table>
-
+<div class="container" id="Sua" style="display:none">
+<table style="border:none">
+    <tbody>
+        <tr>
+            <td>Mã thiết bị: </td>
+            <td>
+                <input id="txtThietBi" type="text" name="MaThietBi" style="margin-bottom: 10px; border-radius: 2px; width: 280px" />
+            </td>
+        </tr>
+        <tr>
+            <td>Mã loại: </td>
+            <td>
+                <select style="margin-bottom: 10px; border-radius: 2px; width: 280px" id="value2" name="MaLoai" onchange="GetSP(value);">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Mã hàng: </td>
+            <td>
+                <select style="margin-bottom: 10px; border-radius:2px; width: 50px" id="value1" name="MaHang" onchange="GetSP(value);">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Tên thiết bị: </td>
+            <td>
+                <input id="txtTTB" type="text" name="TenThietBi" class="form-control" style="margin-bottom: 10px;">
+            </td>
+        </tr>
+        <tr>
+            <td>Giá bán: </td>
+            <td>
+                <div class="input-group">
+                    <input class="form-control" id="txtGiaBan" type="text" name="GiaBan" required style="margin-bottom: 10px;">
+                    <span class="input-group-text" style="margin-bottom: 10px;">VNĐ</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Url ảnh: </td>
+            <td>
+                <div class="input-group">
+                    <span class="input-group-text" style="margin-bottom: 10px;">http://</span>
+                    <input id="txtAnh" type="text" name="Anh" class="form-control" required style="margin-bottom: 10px;">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Chi tiết: </td>
+            <td>
+                <input id="txtChiTiet" name="ChiTiet" style="margin-bottom: 10px;">
+                <script>var data = CKEDITOR.replace('ChiTiet');</script>
+            </td>
+        </tr>
+        <tr>
+            <td>Số lượng: </td>
+            <td>
+                <input id="txtSoLuong" type="number" name="SoLuong" min="0" value="0" class="form-control" style="margin-top: 10px;">
+            </td>
+        </tr>
+        <tr>
+            <td style="display: inline-flex">
+                <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px; margin-right: 10px" onclick="HienThiTim()">Quay lại</button>
+                <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
+                        onclick="SuaSP();">
+                    Cập nhật
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </div>
+
+
+

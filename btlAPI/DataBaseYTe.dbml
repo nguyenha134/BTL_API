@@ -43,25 +43,6 @@
       <Column Name="TenLoai" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.CTHD" Member="CTHDs">
-    <Type Name="CTHD">
-      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="TenThietBi" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="Anh" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="GiaBan" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="SoLuong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ThanhTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.HDB" Member="HDBs">
-    <Type Name="HDB">
-      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="TenKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Demo" Member="Demos">
     <Type Name="Demo">
       <Column Name="MaThietBi" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
@@ -80,6 +61,79 @@
       <Column Name="Ten" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="MaDanhMuc" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="TenLoai" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HDB" Member="HDBs">
+    <Type Name="HDB">
+      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="TenKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Demo1" Member="Demo1s">
+    <Type Name="Demo1">
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="TenKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLanMua" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Demo3" Member="Demo3s">
+    <Type Name="Demo3">
+      <Column Name="Nam" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Thang" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongHD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SoSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="TenThietBi" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Demo2" Member="Demo2s">
+    <Type Name="Demo2">
+      <Column Name="Nam" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Thang" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongHD" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SoSP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TongTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KhachHang" Member="KhachHangs">
+    <Type Name="KhachHang">
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenKH" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DienThoai" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ChiTietHDB" Member="ChiTietHDBs">
+    <Type Name="ChiTietHDB">
+      <Column Name="MaThietBi" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ThanhTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDonBan" Member="HoaDonBans">
+    <Type Name="HoaDonBan">
+      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaKH" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="NgayLap" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CTHD" Member="CTHDs">
+    <Type Name="CTHD">
+      <Column Name="SoHDB" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TenThietBi" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="Anh" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="GiaBan" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ThanhTien" Type="System.Decimal" DbType="Money" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

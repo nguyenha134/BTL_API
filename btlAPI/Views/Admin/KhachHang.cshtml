@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "KhachHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            LayKhachHang();
+        });
+        //Hàm lấy ra toàn bộ danh sách Khách Hàng. Dùng $.ajax() thực hiện method HTTP GET
+        function LayKhachHang() {
+            $.ajax({
+                url: 'https://localhost:44381/KhachHang',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table = table + '<tr>'
+                        table = table + '<td style="max-width:150px">' + reponse[i].MaKH + '</td>';
+                        table = table + '<td>' + reponse[i].TenKH + '</td>';
+                        table = table + '<td>' + reponse[i].DienThoai + '</td>';
+                        table = table + '<td>' + reponse[i].DiaChi + '</td>';
+                        table = table + '<td>' + reponse[i].Email + '</td>';
+                        table = table + '<td> <button type="button" class="btn btn-danger" onclick="LayChiTietKhachHang(\'' + reponse[i].MaKH + '\'),LayDHTheoMaKH(\'' + reponse[i].MaKH + '\'),HienThongTinVaHoaDon()">Xem Thêm</button> </td>';
+                        table = table + '<tr>'
+                    }
+                    document.getElementById('LayKhachHang').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function LayChiTietKhachHang(idMaKH) {
+            $.ajax({
+                url: 'https://localhost:44381/KhachHang/' + idMaKH,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    let table = '';
+                    if (reponse.SoLanMua==null) {
+                        reponse.SoLanMua = 0;
+                    }
+                    table = table + '<p style="max-width:150px">' + reponse.MaKH + '</p>';
+                    table = table + '<p>' + reponse.TenKH + '</p>';
+                    table = table + '<p>' + reponse.DienThoai + '</p>';
+                    table = table + '<p>' + reponse.DiaChi + '</p>';
+                    table = table + '<p>' + reponse.Email + '</p>';
+                    table = table + '<p>' + reponse.SoLanMua + '</p>';
+                    document.getElementById('TTKH').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function LayDHTheoMaKH(MaKH) {
+            $.ajax({
+                url: 'https://localhost:44381/HDBTheoMaKH/' + MaKH,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    if (reponse.length == 0) {
+                        /*Demo1();*/
+                        table = table + '<p style="text-align:center">Khách hàng này chưa mua sản phẩm</p>';
+                        document.getElementById('3').innerHTML = table;
+                    } else {
+                        for (var i = 0; i < len; ++i) {
+                            table = table + '<tr>'
+                            table = table + '<td style="max-width:150px">' + reponse[i].SoHDB + '</td>';
+                            table = table + '<td>' + reponse[i].NgayLap + '</td>';
+                            table = table + '<td>Hoàn thành</td>';
+                            table = table + '<td> <button type="button" class="btn btn-danger" onclick="LayChiTietHoaDon(\'' + reponse[i].SoHDB + '\'),Hien()">Xem Thêm</button> </td>';
+                            table = table + '<tr>'
+                        }
+                        document.getElementById('listDH').innerHTML = table;
+                    };
+                },
+                fail: function (response) { }
+            });
+        }
+        function LayChiTietHoaDon(idCTHDB) {
+            $.ajax({
+                url: 'https://localhost:44381/CTHD/' + idCTHDB,
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table = table + '<tr>'
+                        table = table + '<td style="max-width:150px">' + reponse[i].SoHDB + '</td>';
+                        table = table + '<td>' + reponse[i].TenThietBi + '</td>';
+                        table = table + '<td> <div ><img src="' + reponse[i].Anh + '" style="width : 38px; height : 38px " /></div> </td>';
+                        table = table + '<td>' + reponse[i].GiaBan + '</td>';
+                        table = table + '<td>' + reponse[i].SoLuong + '</td>';
+                        table = table + '<td>' + reponse[i].ThanhTien + '</td>';
+                        table = table + '<tr>'
+                    }
+                    document.getElementById('CTDH').innerHTML = table;
+                },
+                fail: function (response) { }
+            });
+        }
+        function HienThongTinVaHoaDon() {
+            document.getElementById("1").style.display = 'inline';
+            document.getElementById("0").style.display = 'none';
+        }
+        function Hien() {
+            document.getElementById("2").style.display = 'inline';
+        }
+    </script>
+}
+@*Hiển thị hóa đơn bán*@
+<h1 style="text-align:center">Bảng Khách Hàng</h1>
+<table class="table table-hover" style="text-align:center" id="0">
+    <thead>
+        <tr>
+            <th style="max-width:150px">Mã Khách Hàng</th>
+            <th>Tên Khách Hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody id="LayKhachHang">
+    </tbody>
+</table>
+@*Hiển thị chi tiết hóa đơn*@
+<div class="content-wrapper content">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 tittelKH">
+                <div id="1" style="display:none">
+                    @*Thông tin khách hàng+Hóa đơn khách hàng đó đã mua*@
+                    <div class="col-sm-6 tittel">
+                        <h5 class="m-0 text-dark">Thông tin khách hàng</h5>
+                    </div>
+                    <div class="row Contact">
+                        <div class="col-sm-2 contactHeader">
+                            <p>Mã khách hàng: </p>
+                            <p>Tên khách hàng: </p>
+                            <p>Số điện thoại: </p>
+                            <p>Địa chỉ: </p>
+                            <p>Email: </p>
+                            <p>Tổng số lần mua hàng :</p>
+                        </div>
+                        <div class="col-sm-10" id="TTKH">
+
+                        </div>
+                    </div>
+                    <div class="row mb-2 tittelKH">
+                        <div class="col-sm-6 tittel">
+                            <h5 class="m-0 text-dark">Lịch sử mua hàng</h5>
+                        </div>
+                    </div>
+                    <div class="Table_wrapper">
+                        <div id="3">
+                            <table class="table table-hover">
+                                <thead class="header">
+                                    <tr>
+                                        <th scope="col">Mã hóa đơn</th>
+                                        <th scope="col">Thời gian</th>
+                                        <th scope="col">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listDH">
+                                </tbody>
+                            </table>
+                            <div id="2" style="display:none">
+                                <div class="row mb-2 tittelKH">
+                                    <div class="col-sm-6 tittel">
+                                        <h5 class="m-0 text-dark">Chi Tiết Đơn Hàng</h5>
+                                    </div>
+                                </div>
+                                <div class="Table_wrapper">
+                                    <table class="table table-hover">
+                                        <thead class="header">
+                                            <tr>
+                                                <th scope="col">Số Hóa Đơn</th>
+                                                <th scope="col">Tên Thiết Bị</th>
+                                                <th scope="col">Ảnh</th>
+                                                <th scope="col">Giá Bán</th>
+                                                <th scope="col">Số Lượng</th>
+                                                <th scope="col">Thành Tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="CTDH">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row back">
+                            <div class="col-sm-6">
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="@Url.Action("KhachHang")" class="btnPro">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+

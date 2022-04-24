@@ -18,7 +18,7 @@
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                   
+                    alert("Không");
                 },
                 success: function (reponse) {
                     const len = reponse.length;
@@ -39,14 +39,14 @@
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                   
+                    alert("Không");
                 },
                 success: function (reponse) {
                     const len = reponse.length;
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table = table + '<hr>'
-                        table = table + '<option value="' + reponse[i].MaHang + '">' + reponse[i].Ten+ '</option>'
+                        table = table + '<option value="' + reponse[i].MaHang + '">' + reponse[i].Ten + '</option>'
                     }
                     document.getElementById('value1').innerHTML = table;
                 },
@@ -57,19 +57,44 @@
             var url = 'https://localhost:44381/api/them/?maThietBi=' +
                 $("input[name='MaThietBi']").val() + '&maLoai=' + $("select[name='MaLoai']").val() +
                 '&maHang=' + $("select[name='MaHang']").val() + '&tenThietBi=' + $("input[name='TenThietBi']").val() + '&giaBan=' + $("input[name='GiaBan']").val()
-                + '&anh=' + $("input[name='Anh']").val() + '&chiTiet=' + $("input[name='ChiTiet']").val() + '&soLuong=' + $("input[name='SoLuong']").val();
+                + '&anh=' + $("input[name='Anh']").val() + '&chiTiet=' + $("input[id='txtChiTiet']").val() + '&soLuong=' + $("input[name='SoLuong']").val();
             $.ajax({
                 url: url,
                 method: 'POST',
                 contentType: 'json',
                 dataType: 'json',
                 error: function (response) {
-                    alert("Thêm mới không thành công");
                 },
                 success: function (reponse) {
-                    alert("Thêm mới thành công");
+                    
+                    alert($("input[id='txtChiTiet']").val());
+                    window.location.href = '@Url.Action("DanhSach", "Admin")';
                 }
             });
+        }
+        function check() {
+            $.ajax({
+                url: 'https://localhost:44381/SP',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function (response) {
+                    alert("Không");
+                },
+                success: function (reponse) {
+                    const len = reponse.length;
+                    for (var i = 0; i < len; ++i) {
+                        if (reponse[i].MaThietBi != $("input[name='MaThietBi']").val()) {
+                            ThemSP();
+                            break;
+                        } else {
+                            alert("Sản phẩm đã trùng mã");
+                        }
+                    }
+                },
+                fail: function (response) { }
+            });
+            
         }
     </script>
 }
@@ -124,7 +149,7 @@
             <tr>
                 <td>Chi tiết: </td>
                 <td>
-                    <textarea id="txtChiTiet" name="ChiTiet" style="margin-bottom: 10px;"></textarea>
+                    <textarea id="txtChiTiet" name="ChiTiet" style="margin-bottom: 10px"></textarea>
                     <script>CKEDITOR.replace('ChiTiet');</script>
 
                 </td>
@@ -137,10 +162,10 @@
             </tr>
             <tr>
                 <td>
-                    <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
-                            onclick="ThemSP();">
-                        Thêm mới
-                    </button>
+                        <button class="btn-primary update-button" style="width: 150px; height:40px; border: none; outline: none; border-radius: 20px; margin-top: 20px;"
+                                onclick="check();">
+                            Thêm mới
+                        </button> 
                 </td>
             </tr>
         </tbody>

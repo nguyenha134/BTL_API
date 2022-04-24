@@ -21,11 +21,16 @@ namespace btlAPI.Controllers
         {
             return View();
         }
-        public ActionResult Sua()
+     
+        public ActionResult HoaDon()
         {
             return View();
         }
-        public ActionResult HoaDon()
+        public ActionResult ThongKe()
+        {
+            return View();
+        }
+        public ActionResult KhachHang()
         {
             return View();
         }

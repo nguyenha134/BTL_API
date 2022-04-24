@@ -137,7 +137,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhSachController.cs" />
     <Compile Include="Areas\Admin\Controllers\HoaDonController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThemController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongKeController.cs" />
     <Compile Include="Areas\Client\TB_YTEController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
@@ -168,7 +170,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataBaseYTe.designer.cs">
@@ -179,48 +180,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChiTietHDB.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ChuQuanLy.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DanhMuc.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBYTE.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBYTE.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBYTE.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBYTE.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBYTE.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HangThietBi.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HoaDonBan.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\KhachHang.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LoaiThietBi.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TaiKhoan.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ThietBiYTe.cs">
-      <DependentUpon>DBYTE.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\GioHang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +194,6 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Data\abc.css" />
     <Content Include="Content\Data\bootstrap-grid.min.css" />
     <Content Include="Content\Data\bootstrap-reboot.css" />
@@ -256,16 +215,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\DBYTE.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBYTE.edmx</DependentUpon>
-      <LastGenOutput>DBYTE.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DBYTE.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBYTE.edmx</DependentUpon>
-      <LastGenOutput>DBYTE.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -340,13 +289,6 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminTemplate.cshtml" />
-    <EntityDeploy Include="Models\DBYTE.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBYTE.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DBYTE.edmx.diagram">
-      <DependentUpon>DBYTE.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
@@ -367,20 +309,21 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\TrangChuAdmin.cshtml" />
     <Content Include="Views\Admin\DanhSach.cshtml" />
     <Content Include="Views\Admin\HoaDon.cshtml" />
     <Content Include="Views\Admin\Them.cshtml" />
+    <Content Include="Views\Admin\ThongKe.cshtml" />
+    <Content Include="Views\Admin\KhachHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Client\Views\TB_YTE\" />
+    <Folder Include="Views\DoanhThu\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

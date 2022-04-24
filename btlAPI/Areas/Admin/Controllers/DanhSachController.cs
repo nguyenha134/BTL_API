@@ -80,5 +80,31 @@ namespace btlAPI.Areas.Admin.Controllers
                 return false;
             }
         }
+        [Route("SuaTT/{id}")]
+        [HttpPut]
+        public bool SuaTT(string id)
+        {
+            try
+            {
+                ThietBiYTe sanpham = db.ThietBiYTes.FirstOrDefault(x => x.MaThietBi == id);
+                if (sanpham == null)
+                {
+                    return false;
+                }
+                sanpham.An = true;
+                db.SubmitChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        [Route("CTHD")]
+        [HttpGet]
+        public List<CTHD> Demo()
+        {
+            return db.CTHDs.ToList();
+        }
     }
 }
